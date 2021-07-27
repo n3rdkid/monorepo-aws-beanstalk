@@ -1,1 +1,0 @@
-web: yarn local:start
