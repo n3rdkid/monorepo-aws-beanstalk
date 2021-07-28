@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "packages/admin/**"
+      - "packages/common/**"
 
 jobs:
   setup_environment:
