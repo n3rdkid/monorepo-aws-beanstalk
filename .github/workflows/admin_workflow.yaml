@@ -85,6 +85,7 @@ jobs:
           if [ ${diff_files_admin} -ne 0 ] || [ ${diff_files_common} -ne 0 ]  ; then
             echo "::set-output name=is_admin::true"
           fi
+          
       - name: Build the admin package
         if: ${{ startsWith(github.ref, 'refs/heads/') || (startsWith(github.ref, 'refs/tags/v') && steps.tag_test.outputs.is_admin == 'true') }}
         run: |
