@@ -2,10 +2,10 @@
   "name": "consumer",
   "version": "0.1.0",
   "private": true,
-
+  "engines": {"node": "14.x"},
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p 3001"
   }
 }
