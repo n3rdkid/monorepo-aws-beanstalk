@@ -1,6 +1,9 @@
 name: Consumer Workflow
 on:
   push:
+    branches:
+      - "develop"
+      - "main"
     paths:
       - "packages/consumer/**"
 
