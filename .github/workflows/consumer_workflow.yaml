@@ -77,9 +77,11 @@ jobs:
           new_tag=$(git describe --abbrev=0 --tags $(git rev-list --tags --max-count=1))
           echo $new_tag
           
-          diff_files=$(sudo git diff $old_tag $new_tag --name-only | grep -c packages/consumer || true)    
-          echo $diff_files
-          if [[ ${diff_files} -ne 0 ]]; then
+          diff_files_consumer=$(sudo git diff $old_tag $new_tag --name-only | grep -c packages/consumer || true)
+          diff_files_common=$(sudo git diff $old_tag $new_tag --name-only | grep -c packages/common || true)    
+          echo Consumer Diff :: $diff_files_consumer
+          echo Consumer Diff :: $diff_files_common
+          if [[ ${diff_files_consumer} -ne 0 ] || [ ${diff_files_common} -ne 0 ]]; then
             echo "::set-output name=is_consumer::true"
           fi
       - name: Build the consumer package
