@@ -4,8 +4,8 @@ on:
     branches:
       - "develop"
       - "main"
-    paths:
-      - "packages/consumer/**"
+    # paths:
+    #   - "packages/consumer/**"
 
 jobs:
   setup_environment:
