@@ -1,8 +1,8 @@
-name: Consumer Workflow
+name: Admin Workflow
 on:
   push:
     paths:
-      - "packages/consumer/**"
+      - "packages/admin/**"
 
 jobs:
   setup_environment:
@@ -79,16 +79,16 @@ jobs:
           diff_files=$(sudo git diff $old_tag $new_tag --name-only | grep -c packages/consumer || true)    
           echo $diff_files
           if [[ ${diff_files} -ne 0 ]]; then
-            echo "::set-output name=is_consumer::true"
+            echo "::set-output name=is_admin::true"
           fi
-      - name: Build the consumer package
+      - name: Build the admin package
         if: ${{ startsWith(github.ref, 'refs/heads/') || (startsWith(github.ref, 'refs/tags/v') && steps.tag_test.outputs.is_consumer == 'true') }}
         run: |
-         yarn build:consumer
-         echo "Build Consumer"
+         yarn build:admin
+         echo "Build Admin"
          echo ${{github.event_name}} ${{github.ref}}
       
-      - name: Generate deployment package for consumer
+      - name: Generate deployment package for admin
         if: ${{ github.event_name == 'push' && (github.ref == 'refs/heads/develop' || (startsWith(github.ref, 'refs/tags/v') && steps.tag_test.outputs.is_consumer == 'true')) }}
         run: zip -r deploy.zip . -x '*.git*'
       
@@ -121,7 +121,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
           application_name: ${{ secrets.APPLICATION_NAME }}
-          environment_name: ${{ secrets.BEANSTALK_ENVIRONMENT_NAME_CONSUMER }}
+          environment_name: ${{ secrets.BEANSTALK_ENVIRONMENT_NAME_ADMIN }}
           version_label: "monorepo-next-${{ steps.format-time.outputs.replaced }}"
           region: ${{ secrets.REGION }}
           deployment_package: deploy.zip
